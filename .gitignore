@@ -1,0 +1,16 @@
+# R generated files
+*.Rhistory
+*.RData
+*.Rproj.user
+.Rproj.user/
+
+# Plot outputs
+Rplots.pdf
+*.pdf
+
+# Output files
+output_*.txt
+
+# Temporary files
+*~
+.DS_Store
