@@ -181,7 +181,10 @@ vif(model2)
 
 # 2. Outliers and influential observations
 # Cook's distance
-cooks_d <- cooksplot(model2)
+cooks_d <- cooks.distance(model2)
+plot(cooks_d, type = "h", main = "Cook's Distance", 
+     ylab = "Cook's Distance", xlab = "Observation")
+abline(h = 4/nrow(MEP2014), col = "red", lty = 2)
 
 # Standardized residuals
 std_resid <- rstandard(model2)
@@ -226,7 +229,7 @@ predict(model2, newdata = new_data, interval = "prediction")
 
 # Standardize variables for comparing effect sizes
 MEP2014_std <- MEP2014 %>%
-  mutate(across(c(Age, LaborCost, LocalAssistants), scale))
+  mutate(across(c(Age, LaborCost, LocalAssistants), ~as.numeric(scale(.))))
 
 # Fit model with standardized variables
 model_std <- lm(LocalAssistants ~ Age + Female + Incumbent + LaborCost, 
