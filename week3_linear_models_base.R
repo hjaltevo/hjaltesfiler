@@ -357,7 +357,18 @@ print(summary(model_full))
 
 # Backward selection using AIC
 cat("\nPerforming backward selection based on AIC...\n")
-model_backward <- step(model_full, direction = "backward", trace = 0)
+# Remove rows with missing values for consistent comparison
+MEP2014_complete <- na.omit(MEP2014[, c("LocalAssistants", "Age", "Female", 
+                                         "Incumbent", "LaborCost", "OpenList", 
+                                         "NationalCandidateCentered", "ProxNatElection",
+                                         "cabinet_party", "SeatsNatPal.prop")])
+
+model_full_complete <- lm(LocalAssistants ~ Age + Female + Incumbent + LaborCost + 
+                          OpenList + NationalCandidateCentered + ProxNatElection +
+                          cabinet_party + SeatsNatPal.prop, 
+                          data = MEP2014_complete)
+
+model_backward <- step(model_full_complete, direction = "backward", trace = 0)
 
 cat("\nBackward Selection Results:\n")
 print(summary(model_backward))
